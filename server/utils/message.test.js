@@ -1,6 +1,6 @@
 const expect = require('expect');
 
-const {generateMessage} = require('./message');
+const {generateMessage, generateLocationMessage} = require('./message');
 
 describe('generateMessage', () => {
     // Don't need done() because this is a sync test
@@ -16,3 +16,18 @@ describe('generateMessage', () => {
         expect(testMessage.createdAt).toBeA('number');
     });
 });
+
+describe('generateLocationMessage', () => {
+    it('should generate the correct location message object', () => {
+        const from = 'Anirban';
+        const latitude = 10;
+        const longitude = -15;
+        const testLocationMessage = generateLocationMessage(from, latitude, longitude);
+
+        expect(testLocationMessage).toInclude({
+            from,
+            url: `https://google.com/maps?q=${latitude},${longitude}`
+        });
+        expect(testLocationMessage.createdAt).toBeA('number');
+    })
+})
